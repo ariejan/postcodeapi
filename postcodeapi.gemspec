@@ -20,6 +20,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'httparty', '~> 0.10.2'
   gem.add_dependency 'hashie', '~> 1.2.0'
 
+  gem.add_development_dependency 'rake', '~> 10.0.3'
   gem.add_development_dependency 'rspec', '~> 2.12.0'
   gem.add_development_dependency 'webmock', '~> 1.9.0'
 end
