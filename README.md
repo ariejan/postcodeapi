@@ -1,4 +1,4 @@
-# Postcodeapi
+# Postcodeapi [![Build Status](https://travis-ci.org/ariejan/postcodeapi.png?branch=master)](https://travis-ci.org/ariejan/postcodeapi)
 
 This is a small Ruby wrapper around the postcodeapi.nu API, which allows you 
 to resolve Dutch postcodes to street and city names.
@@ -29,6 +29,9 @@ Firstly, sign up for a free API key at http://postcodeapi.nu, then juse this gem
 
 ## Contributing
 
+Please make sure you add specs for your features. Pull requests without proper
+specs will not be merged.
+
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
@@ -37,7 +40,9 @@ Firstly, sign up for a free API key at http://postcodeapi.nu, then juse this gem
 
 ## Contributors
 
-Original author: Ariejan de Vroom, https://ariejan.net
+Original author: 
+
+ * Ariejan de Vroom, https://ariejan.net
 
 ## LICENSE
 
