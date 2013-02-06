@@ -9,9 +9,10 @@ module Postcode
       @api_key = api_key
     end
 
-    def postcode(postcode, options = {})
+    def postcode(postcode, house_number = nil, options = {})
       options.merge!(:headers => { "Api-Key" => @api_key})
-      response = self.class.get("/#{postcode}", options)
+      query = [postcode, house_number].compact.join("/")
+      response = self.class.get("/#{query}", options)
       Hashie::Mash.new(response.parsed_response)
     end
   end
