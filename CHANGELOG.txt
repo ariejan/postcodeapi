@@ -1,0 +1,7 @@
+# 0.0.2 - 2013-03-14
+
+* Use plain old net/http instead of pulling in httparty [martijn]
+
+# 0.0.1 - 2013-02-06
+
+* Initial release [ariejan]
