@@ -1,7 +1,7 @@
 require 'rubygems'
 
-require 'httparty'
 require 'hashie'
+require 'json'
 
 require "postcodeapi/version"
 require "postcodeapi/api"
