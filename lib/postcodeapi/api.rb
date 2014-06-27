@@ -8,6 +8,9 @@ module Postcode
     end
 
     def postcode(postcode, house_number = nil, options = {})
+      postcode = postcode.gsub(/\s+/, '')
+      house_number = house_number.to_s.gsub(/\s+/, '') unless house_number
+
       uri = URI.parse([BASE_URI, postcode, house_number].compact.join('/'))
 
       req = Net::HTTP::Get.new(uri.path)
