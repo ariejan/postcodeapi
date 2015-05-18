@@ -40,6 +40,13 @@ describe Postcode::API do
         result.resource.latitude.should eq(51.9401)
         result.resource.longitude.should eq(5.61531)
       end
+
+      it 'sanitizes input before lookup' do
+        result = api.postcode('5041 eb')
+
+        result.success.should be_true
+        result.resource.postcode.should eq("5041EB")
+      end
     end
 
     context "with postcode and house number" do
