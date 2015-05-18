@@ -8,6 +8,7 @@ module Postcode
     end
 
     def postcode(postcode, house_number = nil, options = {})
+      postcode = sanitize(postcode)
       uri = URI.parse([BASE_URI, postcode, house_number].compact.join('/'))
 
       req = Net::HTTP::Get.new(uri.path)
@@ -18,6 +19,10 @@ module Postcode
       end
 
       Hashie::Mash.new(JSON.parse(res.body))
+    end
+
+    def sanitize(postcode)
+      postcode.gsub(/\s+/, '').upcase
     end
   end
 end
