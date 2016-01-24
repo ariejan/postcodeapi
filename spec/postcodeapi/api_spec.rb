@@ -4,8 +4,6 @@ describe Postcode::API do
   context "without a valid API key" do
     before do
       body = '{"error":"API key is invalid."}'
-
-
       stub_request(:get, "https://postcode-api.apiwise.nl/v2/addresses?number&postcode=5041EB").
         with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby', 'X-Api-Key'=>'invalid'}).
         to_return(:status => 401, :body => body, :headers => {"Content-Type" => "application/json"})
@@ -13,10 +11,20 @@ describe Postcode::API do
 
     subject(:api) { Postcode::API.new("invalid") }
 
-    it 'returns an error response' do
-      result = api.postcode('5041EB')
+    context "for raw data request" do
+      it 'returns an error response' do
+        result = api.addresses('5041EB')
 
-      result.error.should eq("API key is invalid.")
+        result.error.should eq("API key is invalid.")
+      end
+    end
+
+    context "for simplified data request" do
+      it 'also returns an error response' do
+        result = api.simple_addresses('5041EB')
+
+        result.error.should eq("API key is invalid.")
+      end
     end
   end
 
@@ -31,23 +39,37 @@ describe Postcode::API do
 
       subject(:api) { Postcode::API.new("valid") }
 
-      it 'returns an success response' do
-        result = api.postcode('5041EB')
+      context "for raw data request" do
+        it 'returns an success response with correct format' do
+          result = api.addresses('5041EB')
 
-        result.should_not be_empty
-        result.first.street.should eq("Wilhelminapark")
-        result.first.postcode.should eq("5041EB")
-        result.first.municipality.label.should eq("Tilburg")
-        result.first.geo.center.wgs84.coordinates.last.should eq(51.5666652242)
-        result.first.geo.center.wgs84.coordinates.first.should eq(5.07699118186)        
+          result.addresses.should_not be_empty
+          result.addresses.first.street.should eq("Wilhelminapark")
+          result.addresses.first.postcode.should eq("5041EB")
+          result.addresses.first.municipality.label.should eq("Tilburg")
+          result.addresses.first.geo.center.wgs84.coordinates.last.should eq(51.5666652242)
+          result.addresses.first.geo.center.wgs84.coordinates.first.should eq(5.07699118186)
+        end
+      end
 
+      context "for simplified data request" do
+        it 'returns an success response' do
+          result = api.simple_addresses('5041EB')
+
+          result.addresses.should_not be_empty
+          result.addresses.first.street.should eq("Wilhelminapark")
+          result.addresses.first.postcode.should eq("5041EB")
+          result.addresses.first.municipality.should eq("Tilburg")
+          result.addresses.first.latitude.should eq(51.5666652242)
+          result.addresses.first.longitude.should eq(5.07699118186)
+        end
       end
 
       it 'sanitizes input before lookup' do
-        result = api.postcode('5041 eb')
+        result = api.simple_addresses('5041 eb')
 
-        result.should_not be_empty
-        result.first.postcode.should eq("5041EB")
+        result.addresses.should_not be_empty
+        result.addresses.first.postcode.should eq("5041EB")
       end
     end
 
@@ -62,14 +84,14 @@ describe Postcode::API do
       subject(:api) { Postcode::API.new("valid") }
 
       it 'returns an error response' do
-        result = api.postcode('5041EB', 21)
+        result = api.simple_addresses('5041EB', 21)
 
-        result.should_not be_empty
-        result.first.street.should eq("Wilhelminapark")
-        result.first.postcode.should eq("5041EB")
-        result.first.municipality.label.should eq("Tilburg")
-        result.first.geo.center.wgs84.coordinates.last.should eq(51.566414786)
-        result.first.geo.center.wgs84.coordinates.first.should eq(5.07717893166) 
+        result.addresses.should_not be_empty
+        result.addresses.first.street.should eq("Wilhelminapark")
+        result.addresses.first.postcode.should eq("5041EB")
+        result.addresses.first.municipality.should eq("Tilburg")
+        result.addresses.first.latitude.should eq(51.566414786)
+        result.addresses.first.longitude.should eq(5.07717893166)
       end
     end
   end
