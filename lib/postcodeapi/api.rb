@@ -1,7 +1,7 @@
 module Postcode
-  # You're required to sign up for an api key at http://postcodeapi.nu
+  # You're required to sign up for an api key at http://www.postcodeapi.nu/
   class API
-    BASE_URI = "http://api.postcodeapi.nu"
+    BASE_URI = 'https://postcode-api.apiwise.nl'
 
     def initialize(api_key)
       @api_key = api_key
@@ -9,16 +9,22 @@ module Postcode
 
     def postcode(postcode, house_number = nil, options = {})
       postcode = sanitize(postcode)
-      uri = URI.parse([BASE_URI, postcode, house_number].compact.join('/'))
+      uri = URI.parse([BASE_URI, 'v2', 'addresses'].compact.join('/'))
+      uri.query = URI.encode_www_form( {'postcode' => postcode, 'number' => house_number} )
 
-      req = Net::HTTP::Get.new(uri.path)
-      req.add_field('Api-Key', @api_key)
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-      res = Net::HTTP.new(uri.host, uri.port).start do |http|
-        http.request(req)
-      end
+      request = Net::HTTP::Get.new(uri.request_uri)
+      request.add_field('X-Api-Key', @api_key)
+      response = http.request(request)
 
-      Hashie::Mash.new(JSON.parse(res.body))
+      content = Hashie::Mash.new(JSON.parse(response.body))
+
+      return content if content.error
+
+      content._embedded.addresses
     end
 
     def sanitize(postcode)
