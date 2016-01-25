@@ -15,7 +15,7 @@ describe Postcode::API do
       it 'returns an error response' do
         result = api.addresses('5041EB')
 
-        result.error.should eq("API key is invalid.")
+        expect(result.error).to eq("API key is invalid.")
       end
     end
 
@@ -23,7 +23,7 @@ describe Postcode::API do
       it 'also returns an error response' do
         result = api.simple_addresses('5041EB')
 
-        result.error.should eq("API key is invalid.")
+        expect(result.error).to eq("API key is invalid.")
       end
     end
   end
@@ -43,12 +43,12 @@ describe Postcode::API do
         it 'returns an success response with correct format' do
           result = api.addresses('5041EB')
 
-          result.addresses.should_not be_empty
-          result.addresses.first.street.should eq("Wilhelminapark")
-          result.addresses.first.postcode.should eq("5041EB")
-          result.addresses.first.municipality.label.should eq("Tilburg")
-          result.addresses.first.geo.center.wgs84.coordinates.last.should eq(51.5666652242)
-          result.addresses.first.geo.center.wgs84.coordinates.first.should eq(5.07699118186)
+          expect(result.addresses).to_not be_empty
+          expect(result.addresses.first.street).to eq("Wilhelminapark")
+          expect(result.addresses.first.postcode).to eq("5041EB")
+          expect(result.addresses.first.municipality.label).to eq("Tilburg")
+          expect(result.addresses.first.geo.center.wgs84.coordinates.last).to eq(51.5666652242)
+          expect(result.addresses.first.geo.center.wgs84.coordinates.first).to eq(5.07699118186)
         end
       end
 
@@ -56,20 +56,20 @@ describe Postcode::API do
         it 'returns an success response' do
           result = api.simple_addresses('5041EB')
 
-          result.addresses.should_not be_empty
-          result.addresses.first.street.should eq("Wilhelminapark")
-          result.addresses.first.postcode.should eq("5041EB")
-          result.addresses.first.municipality.should eq("Tilburg")
-          result.addresses.first.latitude.should eq(51.5666652242)
-          result.addresses.first.longitude.should eq(5.07699118186)
+          expect(result.addresses).not_to be_empty
+          expect(result.addresses.first.street).to eq("Wilhelminapark")
+          expect(result.addresses.first.postcode).to eq("5041EB")
+          expect(result.addresses.first.municipality).to eq("Tilburg")
+          expect(result.addresses.first.latitude).to eq(51.5666652242)
+          expect(result.addresses.first.longitude).to eq(5.07699118186)
         end
       end
 
       it 'sanitizes input before lookup' do
         result = api.simple_addresses('5041 eb')
 
-        result.addresses.should_not be_empty
-        result.addresses.first.postcode.should eq("5041EB")
+        expect(result.addresses).to_not be_empty
+        expect(result.addresses.first.postcode).to eq("5041EB")
       end
     end
 
@@ -86,12 +86,12 @@ describe Postcode::API do
       it 'returns an error response' do
         result = api.simple_addresses('5041EB', 21)
 
-        result.addresses.should_not be_empty
-        result.addresses.first.street.should eq("Wilhelminapark")
-        result.addresses.first.postcode.should eq("5041EB")
-        result.addresses.first.municipality.should eq("Tilburg")
-        result.addresses.first.latitude.should eq(51.566414786)
-        result.addresses.first.longitude.should eq(5.07717893166)
+        expect(result.addresses).to_not be_empty
+        expect(result.addresses.first.street).to eq("Wilhelminapark")
+        expect(result.addresses.first.postcode).to eq("5041EB")
+        expect(result.addresses.first.municipality).to eq("Tilburg")
+        expect(result.addresses.first.latitude).to eq(51.566414786)
+        expect(result.addresses.first.longitude).to eq(5.07717893166)
       end
     end
   end
