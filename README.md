@@ -3,6 +3,9 @@
 This is a small Ruby wrapper around the postcodeapi.nu API, which allows you 
 to resolve Dutch postcodes to street and city names.
 
+**postcodeapi-2.x is only compatible with PostcodeAPI v2. PostcodeAPI v1 is 
+deprecated and will be taken offline on 2016-03-01.**
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -19,13 +22,58 @@ Or install it yourself as:
 
 ## Usage
 
-Firstly, sign up for a free API key at http://postcodeapi.nu, then juse this gem:
+Firstly, sign up for a free API key at http://postcodeapi.nu, then use this gem like this:
+
+    require 'pp'
+    require 'postcodeapi'
 
     api = Postcode::API.new("your-api-key")
-    result = api.postcode("5041EB")
 
-    result.resource.street
-    => "Wilhelminastraat"
+    irb> pp api.addresses("5694AJ", 1)
+    {"addresses"=>
+      [{"city"=>{"id"=>"3520", "label"=>"Son en Breugel"},
+        "letter"=>nil,
+        "id"=>"0848200000005576",
+        "purpose"=>"woonfunctie",
+        "postcode"=>"5694AJ",
+        "municipality"=>{"id"=>"0848", "label"=>"Son en Breugel"},
+        "nen5825"=>{"street"=>"SINT CATHARINASTRAAT", "postcode"=>"5694 AJ"},
+        "street"=>"Sint Catharinastraat",
+        "number"=>1,
+        "province"=>{"id"=>"30", "label"=>"Noord-Brabant"},
+        "addition"=>nil,
+        "geo"=>
+         {"center"=>
+           {"wgs84"=>
+             {"crs"=>
+               {"properties"=>{"name"=>"urn:ogc:def:crs:OGC:1.3:CRS84"},
+                "type"=>"name"},
+              "type"=>"Point",
+              "coordinates"=>[5.50767699298, 51.5131728171]},
+            "rd"=>
+             {"crs"=>
+               {"properties"=>{"name"=>"urn:ogc:def:crs:EPSG::28992"},
+                "type"=>"name"},
+              "type"=>"Point",
+              "coordinates"=>[163363, 391581]}}},
+        "type"=>"Verblijfsobject",
+        "_links"=>
+         {"self"=>
+           {"href"=>
+             "https://postcode-api.apiwise.nl/v2/addresses/0848200000005576/"}}}]}
+               
+There is also `#simple_addresses` to retrieve a minimal set of data:
+
+     irb> pp api.simple_addresses("5694AJ", 1)
+	 {"addresses"=>
+       [{"latitude"=>51.5131728171,
+         "longitude"=>5.50767699298,
+         "municipality"=>"Son en Breugel",
+         "postcode"=>"5694AJ",
+         "province"=>"Noord-Brabant",
+         "street"=>"Sint Catharinastraat"}]}
+
+Please note that the house number is optional. 
 
 ## Contributing
 
@@ -44,9 +92,15 @@ Original author:
 
  * Ariejan de Vroom, https://ariejan.net
 
+Github contributors
+
+ * pedrocatalao
+ * martijn
+ * WvanLelyveld
+
 ## LICENSE
 
-Copyright (c) 2013 Ariejan de Vroom
+Copyright (c) 2013-2016 Ariejan de Vroom
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
