@@ -6,6 +6,8 @@ rvm:
   - 2.2
   - ruby-head
 
+install: bundle install --jobs=1 --retry=3
+
 matrix:
   allow_failures:
     - rvm: ruby-head
