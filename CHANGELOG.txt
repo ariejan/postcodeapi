@@ -1,3 +1,15 @@
+# 2.0.0 - 2016-01-27
+
+* Migrate to PostcodeAPI v2, see http://www.postcodeapi.nu for details.
+
+# 1.1.0 - 2015-05-18
+
+* Normalize input before calling API
+
+# 1.0.0 - 2014-01-29
+
+* Allow hashie version flexibility
+
 # 0.0.2 - 2013-03-14
 
 * Use plain old net/http instead of pulling in httparty [martijn]
