@@ -4,7 +4,6 @@ script: "bundle exec rspec spec/"
 rvm:
   - 2.1
   - 2.2
-  - 2.3
   - ruby-head
 
 matrix:
