@@ -1,3 +1,7 @@
+# 2.1.0 - 2016-04-08
+
+* Add city to #simple_addresses
+
 # 2.0.0 - 2016-01-27
 
 * Migrate to PostcodeAPI v2, see http://www.postcodeapi.nu for details.
