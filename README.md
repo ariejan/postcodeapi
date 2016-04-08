@@ -1,9 +1,9 @@
 # Postcodeapi [![Build Status](https://travis-ci.org/ariejan/postcodeapi.png?branch=master)](https://travis-ci.org/ariejan/postcodeapi)
 
-This is a small Ruby wrapper around the postcodeapi.nu API, which allows you 
+This is a small Ruby wrapper around the postcodeapi.nu API, which allows you
 to resolve Dutch postcodes to street and city names.
 
-**postcodeapi-2.x is only compatible with PostcodeAPI v2. PostcodeAPI v1 is 
+**postcodeapi-2.x is only compatible with PostcodeAPI v2. PostcodeAPI v1 is
 deprecated and will be taken offline on 2016-03-01.**
 
 ## Installation
@@ -24,6 +24,7 @@ Or install it yourself as:
 
 Firstly, sign up for a free API key at http://postcodeapi.nu, then use this gem like this:
 
+    require 'net/https'
     require 'pp'
     require 'postcodeapi'
 
@@ -61,7 +62,7 @@ Firstly, sign up for a free API key at http://postcodeapi.nu, then use this gem 
          {"self"=>
            {"href"=>
              "https://postcode-api.apiwise.nl/v2/addresses/0848200000005576/"}}}]}
-               
+
 There is also `#simple_addresses` to retrieve a minimal set of data:
 
      irb> pp api.simple_addresses("5694AJ", 1)
@@ -69,11 +70,12 @@ There is also `#simple_addresses` to retrieve a minimal set of data:
        [{"latitude"=>51.5131728171,
          "longitude"=>5.50767699298,
          "municipality"=>"Son en Breugel",
+         "city"=>"Son en Breugel",
          "postcode"=>"5694AJ",
          "province"=>"Noord-Brabant",
          "street"=>"Sint Catharinastraat"}]}
 
-Please note that the house number is optional. 
+Please note that the house number is optional.
 
 ## Contributing
 
@@ -88,12 +90,13 @@ specs will not be merged.
 
 ## Contributors
 
-Original author: 
+Original author:
 
  * Ariejan de Vroom, https://ariejan.net
 
 Github contributors
 
+ * lucianleustean
  * pedrocatalao
  * martijn
  * WvanLelyveld

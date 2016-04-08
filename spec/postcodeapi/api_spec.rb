@@ -46,6 +46,7 @@ describe Postcode::API do
           expect(result.addresses).to_not be_empty
           expect(result.addresses.first.street).to eq("Wilhelminapark")
           expect(result.addresses.first.postcode).to eq("5041EB")
+          expect(result.addresses.first.city.label).to eq("Tilburg")
           expect(result.addresses.first.municipality.label).to eq("Tilburg")
           expect(result.addresses.first.geo.center.wgs84.coordinates.last).to eq(51.5666652242)
           expect(result.addresses.first.geo.center.wgs84.coordinates.first).to eq(5.07699118186)
@@ -59,6 +60,7 @@ describe Postcode::API do
           expect(result.addresses).not_to be_empty
           expect(result.addresses.first.street).to eq("Wilhelminapark")
           expect(result.addresses.first.postcode).to eq("5041EB")
+          expect(result.addresses.first.city).to eq("Tilburg")
           expect(result.addresses.first.municipality).to eq("Tilburg")
           expect(result.addresses.first.latitude).to eq(51.5666652242)
           expect(result.addresses.first.longitude).to eq(5.07699118186)
@@ -89,6 +91,7 @@ describe Postcode::API do
         expect(result.addresses).to_not be_empty
         expect(result.addresses.first.street).to eq("Wilhelminapark")
         expect(result.addresses.first.postcode).to eq("5041EB")
+        expect(result.addresses.first.city).to eq("Tilburg")
         expect(result.addresses.first.municipality).to eq("Tilburg")
         expect(result.addresses.first.latitude).to eq(51.566414786)
         expect(result.addresses.first.longitude).to eq(5.07717893166)
@@ -96,6 +99,3 @@ describe Postcode::API do
     end
   end
 end
-
-
-
