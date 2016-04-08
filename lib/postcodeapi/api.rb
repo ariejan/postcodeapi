@@ -44,6 +44,7 @@ module Postcode
               { latitude: entry.geo.center.wgs84.coordinates.last,
                 longitude: entry.geo.center.wgs84.coordinates.first,
                 municipality: entry.municipality.label,
+                city: entry.city.label,
                 postcode: entry.postcode,
                 province: entry.province.label,
                 street: entry.street
